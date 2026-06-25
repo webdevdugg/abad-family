@@ -21,6 +21,9 @@
 
 html { scroll-behavior: smooth; }
 
+/* Auto-correct EXIF orientation on all images (phone-photographed prints) */
+img { image-orientation: from-image; }
+
 body {
   font-family: var(--font-ui);
   background:  var(--cream);
