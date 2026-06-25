@@ -124,6 +124,25 @@
     </div>
   </aside>
 
+  <!-- ── Memory detail modal ──────────────────────────────────────────────── -->
+  <div class="modal-overlay memory-detail-overlay" id="memory-detail-modal">
+    <div class="memory-detail-panel">
+      <button class="profile-close" id="memory-detail-close" aria-label="Close">✕</button>
+
+      <div class="memory-detail-head">
+        <span class="memory-category-badge" id="md-category"></span>
+        <p class="memory-year" id="md-year"></p>
+        <h2 class="memory-detail-title" id="md-title"></h2>
+        <p class="memory-desc"  id="md-desc"></p>
+        <p class="memory-people" id="md-people"></p>
+      </div>
+
+      <div class="memory-detail-body">
+        <div id="md-media"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Add Memory modal ──────────────────────────────────────────────────── -->
   <div class="modal-overlay" id="add-memory-modal">
     <div class="modal" role="dialog" aria-modal="true" aria-label="Add a memory">

@@ -417,6 +417,84 @@ body {
 }
 .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
 
+/* ── Memory photo count badge ────────────────────────────────────────────── */
+.memory-photo-count {
+  position: absolute; bottom: 10px; right: 10px;
+  background: rgba(28,26,23,0.65); color: #fff;
+  font-size: 10px; font-weight: 500; padding: 3px 8px;
+  border-radius: 100px; backdrop-filter: blur(3px);
+}
+
+/* ── Memory detail modal ──────────────────────────────────────────────────── */
+.memory-detail-overlay {
+  align-items: flex-end;
+  padding: 0;
+}
+@media (min-width: 600px) {
+  .memory-detail-overlay { align-items: center; padding: 24px; }
+}
+
+.memory-detail-panel {
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 680px;
+  max-height: 92dvh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-md);
+}
+@media (min-width: 600px) {
+  .memory-detail-panel { border-radius: 16px; }
+}
+
+.memory-detail-head {
+  padding: 44px 28px 20px;
+  border-bottom: 1px solid var(--cream-line);
+  background: var(--cream);
+}
+.memory-detail-head .memory-category-badge {
+  position: static;
+  display: inline-block;
+  margin-bottom: 10px;
+  background: var(--white);
+}
+.memory-detail-head .memory-year  { margin-bottom: 4px; }
+.memory-detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 300; color: var(--text-dark);
+  line-height: 1.2; margin-bottom: 8px;
+}
+.memory-detail-body { padding: 24px 28px 36px; }
+
+/* Photos grid inside memory detail */
+.memory-detail-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.memory-detail-photo {
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--cream);
+  aspect-ratio: 4/3;
+}
+.memory-detail-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.3s;
+}
+.memory-detail-photo:hover img { transform: scale(1.03); }
+.memory-detail-caption {
+  font-size: 11px; color: var(--text-muted);
+  padding: 5px 8px; font-style: italic;
+}
+.memory-section-label {
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 12px;
+}
+
 /* ── Footer ───────────────────────────────────────────────────────────────── */
 .site-footer { background: var(--text-dark); text-align: center; padding: 32px 48px; }
 .site-footer p { font-size: 12px; color: var(--cream); opacity: 0.4; letter-spacing: 0.08em; }

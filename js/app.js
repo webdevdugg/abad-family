@@ -190,19 +190,23 @@ const App = (() => {
         .map(p => p.firstName)
         .join(', ');
 
-      const hasPhoto = !!m.coverPhoto;
-      const catLabel = m.category.charAt(0).toUpperCase() + m.category.slice(1);
+      const hasPhoto  = !!m.coverPhoto;
+      const photoCount = m.photos?.length || 0;
+      const catLabel  = m.category.charAt(0).toUpperCase() + m.category.slice(1);
 
       return `
         <article class="memory-card" data-id="${m.id}" data-category="${m.category}">
           <div class="memory-card-media">
             ${hasPhoto
-              ? `<img src="${m.coverPhoto}" alt="${m.title}" loading="lazy" class="memory-cover-img">`
-              : `<div class="memory-cover-placeholder">
-                   <span class="placeholder-icon">${categoryIcon(m.category)}</span>
-                 </div>`
+              ? `<img src="${m.coverPhoto}" alt="${m.title}" loading="lazy" class="memory-cover-img"
+                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+              : ''
             }
+            <div class="memory-cover-placeholder" style="${hasPhoto ? 'display:none' : ''}">
+              <span class="placeholder-icon">${categoryIcon(m.category)}</span>
+            </div>
             <span class="memory-category-badge">${catLabel}</span>
+            ${photoCount > 1 ? `<span class="memory-photo-count">📷 ${photoCount}</span>` : ''}
           </div>
           <div class="memory-card-body">
             <p class="memory-year">${m.year}</p>
@@ -213,6 +217,66 @@ const App = (() => {
         </article>
       `;
     }).join('');
+
+    // Click any card to open detail view
+    grid.querySelectorAll('.memory-card').forEach(card => {
+      card.addEventListener('click', () => openMemoryDetail(card.dataset.id));
+    });
+  }
+
+  // ── Memory detail modal ────────────────────────────────────────────────────
+  function openMemoryDetail(memoryId) {
+    const m = MEMORIES.find(mem => mem.id === memoryId);
+    if (!m) return;
+
+    const people = (m.people || [])
+      .map(id => PEOPLE.find(p => p.id === id))
+      .filter(Boolean)
+      .map(p => p.firstName)
+      .join(', ');
+
+    const photoCount = m.photos?.length || 0;
+    const catLabel   = m.category.charAt(0).toUpperCase() + m.category.slice(1);
+
+    const photosHtml = photoCount > 0
+      ? `<div class="memory-detail-photos">
+           ${m.photos.map((ph, i) => `
+             <div class="memory-detail-photo" data-index="${i}">
+               <img src="${ph.url}" alt="${ph.caption || m.title}" loading="lazy"
+                    onerror="this.parentElement.style.display='none'">
+               ${ph.caption ? `<p class="memory-detail-caption">${ph.caption}</p>` : ''}
+             </div>
+           `).join('')}
+         </div>`
+      : `<p class="memories-empty" style="padding:24px 0">No photos added yet.</p>`;
+
+    const videosHtml = (m.videos?.length)
+      ? `<div class="memory-section-label" style="margin-top:24px">Videos</div>
+         <div class="profile-videos-grid">${m.videos.map(v => `
+           <div class="profile-video-thumb">
+             ${v.thumb ? `<img src="${v.thumb}" alt="${v.title}" loading="lazy">` : `<div class="video-thumb-placeholder"><span>▶</span></div>`}
+             <p class="video-title">${v.title}</p>
+           </div>`).join('')}
+         </div>`
+      : '';
+
+    const modal = document.getElementById('memory-detail-modal');
+    if (!modal) return;
+
+    modal.querySelector('#md-category').textContent  = catLabel;
+    modal.querySelector('#md-year').textContent      = m.year;
+    modal.querySelector('#md-title').textContent     = m.title;
+    modal.querySelector('#md-desc').textContent      = m.description || '';
+    modal.querySelector('#md-people').textContent    = people ? `With: ${people}` : '';
+    modal.querySelector('#md-media').innerHTML       = photosHtml + videosHtml;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMemoryDetail() {
+    document.getElementById('memory-detail-modal')?.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   function categoryIcon(cat) {
@@ -235,6 +299,17 @@ const App = (() => {
 
     document.getElementById('add-memory-btn')
       ?.addEventListener('click', openAddMemoryModal);
+
+    // Memory detail modal close
+    document.getElementById('memory-detail-close')
+      ?.addEventListener('click', closeMemoryDetail);
+    document.getElementById('memory-detail-modal')
+      ?.addEventListener('click', e => {
+        if (e.target.id === 'memory-detail-modal') closeMemoryDetail();
+      });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeMemoryDetail(); closeProfile(); }
+    });
   }
 
   // ── Add Memory modal ───────────────────────────────────────────────────────
