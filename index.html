@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abad · Duggan · Levenfeld Family</title>
+  <title>Family Archive</title>
   <meta name="description" content="Three generations. Four families. One story.">
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -25,22 +23,21 @@
       </div>
     </nav>
 
-    <p class="hero-eyebrow">Est. 1963</p>
-    <h1 class="hero-title">Abad · Duggan<br>Levenfeld</h1>
-    <p class="hero-subtitle">Three generations. Four families. One story.</p>
+    <p class="hero-eyebrow" id="est-year">Est. 1963</p>
+    <h1 class="hero-title" id="hero-title">Abad · Duggan<br>Levenfeld</h1>
+    <p class="hero-subtitle" id="hero-subtitle">Three generations. Four families. One story.</p>
   </header>
 
   <!-- ── Family Tree ───────────────────────────────────────────────────────── -->
   <section id="tree" class="section tree-section">
     <div class="section-header">
       <h2 class="section-title">Family Tree</h2>
-      <p class="section-sub">Click any name to learn more. Drag to pan · scroll to zoom.</p>
+      <p class="section-sub">Click any name to learn more &nbsp;·&nbsp; Drag to pan &nbsp;·&nbsp; Scroll to zoom</p>
     </div>
 
     <div class="tree-wrap">
       <div class="tree-svg-container">
         <svg id="family-tree"></svg>
-
         <div class="tree-controls">
           <button class="tree-ctrl-btn" id="zoom-in"    title="Zoom in">+</button>
           <button class="tree-ctrl-btn" id="zoom-out"   title="Zoom out">−</button>
@@ -66,50 +63,110 @@
       </div>
     </div>
 
-    <div class="memories-placeholder">
-      <p>Photos and memories will live here.</p>
-      <button class="btn-primary">+ Add Memory</button>
+    <div id="memories-grid"></div>
+
+    <div class="memories-actions">
+      <button class="btn-primary" id="add-memory-btn">+ Add Memory</button>
     </div>
   </section>
 
   <!-- ── Profile panel ────────────────────────────────────────────────────── -->
   <div class="profile-overlay" id="profile-overlay"></div>
 
-  <aside class="profile-panel" id="profile-panel" role="dialog" aria-modal="true">
+  <aside class="profile-panel" id="profile-panel" role="dialog" aria-modal="true" aria-label="Person profile">
     <button class="profile-close" id="profile-close" aria-label="Close">✕</button>
 
     <div class="profile-head">
       <div id="profile-avatar"></div>
-      <div>
-        <div id="profile-family-tag"></div>
-        <h2 id="profile-name"></h2>
-        <p id="profile-relation"></p>
-      </div>
+      <span id="profile-family-tag"></span>
+      <h2 id="profile-name"></h2>
+      <p id="profile-relation"></p>
     </div>
 
     <div class="profile-body">
-      <div class="profile-detail-row">
-        <span class="detail-label">Born</span>
-        <span class="detail-value" id="profile-born"></span>
-      </div>
-      <div class="profile-detail-row">
-        <span class="detail-label">Status</span>
-        <span class="detail-value" id="profile-status"></span>
+
+      <!-- Vital details -->
+      <div class="profile-details">
+        <div class="profile-detail-row">
+          <span class="detail-label">Born</span>
+          <span class="detail-value" id="profile-born"></span>
+        </div>
+        <div class="profile-detail-row">
+          <span class="detail-label">Status</span>
+          <span class="detail-value" id="profile-status"></span>
+        </div>
       </div>
 
-      <div class="profile-bio-section">
-        <p class="profile-bio-label">Biography</p>
+      <!-- Bio -->
+      <div class="profile-section">
+        <p class="profile-section-label">Biography</p>
         <div id="profile-bio"></div>
       </div>
+
+      <!-- Photos -->
+      <div class="profile-section" id="profile-photos-section">
+        <p class="profile-section-label">Photos</p>
+        <div class="profile-photos-grid" id="profile-photos-grid"></div>
+      </div>
+
+      <!-- Videos -->
+      <div class="profile-section" id="profile-videos-section">
+        <p class="profile-section-label">Videos</p>
+        <div class="profile-videos-grid" id="profile-videos-grid"></div>
+      </div>
+
+      <!-- Memories this person appears in -->
+      <div class="profile-section" id="profile-memories-section">
+        <p class="profile-section-label">Appears in</p>
+        <div class="profile-memories-list" id="profile-memories-list"></div>
+      </div>
+
     </div>
   </aside>
 
+  <!-- ── Add Memory modal ──────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="add-memory-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Add a memory">
+      <h3>Add a Memory</h3>
+
+      <div class="form-row">
+        <label>Title</label>
+        <input type="text" id="mem-title" placeholder="e.g. Christmas 2023">
+      </div>
+      <div class="form-row">
+        <label>Year</label>
+        <input type="number" id="mem-year" placeholder="2024" min="1900" max="2100">
+      </div>
+      <div class="form-row">
+        <label>Category</label>
+        <select id="mem-category">
+          <option value="holidays">Holidays</option>
+          <option value="birthdays">Birthdays</option>
+          <option value="weddings">Weddings</option>
+          <option value="travel">Travel</option>
+          <option value="everyday">Everyday</option>
+          <option value="milestones">Milestones</option>
+          <option value="reunions">Reunions</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Description</label>
+        <textarea id="mem-desc" placeholder="A short description…"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="document.getElementById('add-memory-modal').classList.remove('active'); document.body.style.overflow='';">Cancel</button>
+        <button class="btn-primary" onclick="document.getElementById('add-memory-modal').classList.remove('active'); document.body.style.overflow='';">Save Memory</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Footer ───────────────────────────────────────────────────────────── -->
   <footer class="site-footer">
-    <p>Abad · Duggan · Levenfeld · Est. 1963</p>
+    <p id="footer-text">Abad · Duggan · Levenfeld · Est. 1963</p>
   </footer>
 
-  <!-- Scripts (data must load before tree and app) -->
+  <!-- Scripts — data must load first -->
   <script src="js/data.js"></script>
   <script src="js/tree.js"></script>
   <script src="js/app.js"></script>
