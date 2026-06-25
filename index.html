@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abad · Duggan · Levenfeld Family</title>
+  <meta name="description" content="Three generations. Four families. One story.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+  <header class="site-hero">
+    <nav class="site-nav">
+      <div class="nav-brand">Family Archive</div>
+      <div class="nav-links">
+        <a href="#tree">Family Tree</a>
+        <a href="#memories">Memories</a>
+      </div>
+    </nav>
+
+    <p class="hero-eyebrow">Est. 1963</p>
+    <h1 class="hero-title">Abad · Duggan<br>Levenfeld</h1>
+    <p class="hero-subtitle">Three generations. Four families. One story.</p>
+  </header>
+
+  <!-- ── Family Tree ───────────────────────────────────────────────────────── -->
+  <section id="tree" class="section tree-section">
+    <div class="section-header">
+      <h2 class="section-title">Family Tree</h2>
+      <p class="section-sub">Click any name to learn more. Drag to pan · scroll to zoom.</p>
+    </div>
+
+    <div class="tree-wrap">
+      <div class="tree-svg-container">
+        <svg id="family-tree"></svg>
+
+        <div class="tree-controls">
+          <button class="tree-ctrl-btn" id="zoom-in"    title="Zoom in">+</button>
+          <button class="tree-ctrl-btn" id="zoom-out"   title="Zoom out">−</button>
+          <button class="tree-ctrl-btn" id="zoom-reset" title="Reset view">↺</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Memories ─────────────────────────────────────────────────────────── -->
+  <section id="memories" class="section memories-section">
+    <div class="section-header">
+      <h2 class="section-title">Family Memories</h2>
+      <div class="memory-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="holidays">Holidays</button>
+        <button class="filter-btn" data-filter="birthdays">Birthdays</button>
+        <button class="filter-btn" data-filter="weddings">Weddings</button>
+        <button class="filter-btn" data-filter="travel">Travel</button>
+        <button class="filter-btn" data-filter="everyday">Everyday</button>
+        <button class="filter-btn" data-filter="milestones">Milestones</button>
+        <button class="filter-btn" data-filter="reunions">Reunions</button>
+      </div>
+    </div>
+
+    <div class="memories-placeholder">
+      <p>Photos and memories will live here.</p>
+      <button class="btn-primary">+ Add Memory</button>
+    </div>
+  </section>
+
+  <!-- ── Profile panel ────────────────────────────────────────────────────── -->
+  <div class="profile-overlay" id="profile-overlay"></div>
+
+  <aside class="profile-panel" id="profile-panel" role="dialog" aria-modal="true">
+    <button class="profile-close" id="profile-close" aria-label="Close">✕</button>
+
+    <div class="profile-head">
+      <div id="profile-avatar"></div>
+      <div>
+        <div id="profile-family-tag"></div>
+        <h2 id="profile-name"></h2>
+        <p id="profile-relation"></p>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <div class="profile-detail-row">
+        <span class="detail-label">Born</span>
+        <span class="detail-value" id="profile-born"></span>
+      </div>
+      <div class="profile-detail-row">
+        <span class="detail-label">Status</span>
+        <span class="detail-value" id="profile-status"></span>
+      </div>
+
+      <div class="profile-bio-section">
+        <p class="profile-bio-label">Biography</p>
+        <div id="profile-bio"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Footer ───────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Abad · Duggan · Levenfeld · Est. 1963</p>
+  </footer>
+
+  <!-- Scripts (data must load before tree and app) -->
+  <script src="js/data.js"></script>
+  <script src="js/tree.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
